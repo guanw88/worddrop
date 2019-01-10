@@ -17,6 +17,11 @@ class Tile {
         if (this.y <= 480) this.y += 60;
     }
 
+    shift (units) {
+        const new_x_pos = this.x + units * 60;
+        if (new_x_pos >= 0 && new_x_pos <= 540) this.x += units * 60;
+    }
+
 }
 
 module.exports = Tile;

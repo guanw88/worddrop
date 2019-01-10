@@ -2,7 +2,6 @@ const Tile = require("./tile");
 
 function Game() {
     this.tiles = [];
-    this.addTile();
 }
 
 Game.DIM_X = 600;

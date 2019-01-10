@@ -12,7 +12,7 @@ function GameView(game, ctx) {
 // };
 
 // GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
-//     const ship = this.ship;
+//     const tile = this.tile;
 
 //     Object.keys(GameView.MOVES).forEach(function (k) {
 //         const move = GameView.MOVES[k];
@@ -29,14 +29,16 @@ GameView.prototype.start = function start() {
     requestAnimationFrame(this.animate.bind(this));
 };
 
-GameView.prototype.animate = function animate(time) {
+GameView.prototype.animate = async function animate(time) {
     const timeDelta = time - this.lastTime;
-    // const timeDelta = 1000;
     this.game.step(timeDelta);
     this.ctx.clearRect(0, 0, 600, 600);
     this.game.draw(this.ctx);
     this.lastTime = time;
-    // every call to animate requests causes another call to animate
+    const sleep = function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    await sleep(1000);
     requestAnimationFrame(this.animate.bind(this));
 };
 

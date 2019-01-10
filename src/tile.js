@@ -1,6 +1,6 @@
 
 class Tile {
-    constructor(width = 60, height = 60, color = "#D4BAAC", x = 240, y = 0) {
+    constructor(width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -14,7 +14,7 @@ class Tile {
     }
 
     move (delta) {
-        if (this.y <= 400) this.y += 30;
+        if (this.y <= 480) this.y += 60;
     }
 
 }

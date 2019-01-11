@@ -25,25 +25,25 @@ Game.prototype.allObjects = function allObjects() {
     return [].concat(this.tiles);
 };
 
-Game.prototype.checkCollisions = function checkCollisions() {
-    console.log("Checking collisions");
+Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
+    console.log("Checking vertical collisions");
     let lastTile = this.tiles[this.tiles.length - 1];
-    console.log(this.tiles, lastTile);
+    console.log(lastTile.x, lastTile.y);
     if (lastTile && lastTile.y >= 540) {
-        debugger;
-        lastTile = this.addTile();
-    };
-    // for (let i = 0; i < allObjects.length; i++) {
-    //     for (let j = 0; j < allObjects.length; j++) {
-    //         const obj1 = allObjects[i];
-    //         const obj2 = allObjects[j];
-
-    //         if (obj1.isCollidedWith(obj2)) {
-    //             const collision = obj1.collideWith(obj2);
-    //             if (collision) return;
-    //         }
-    //     }
-    // }
+    console.log("Collided with floor");
+    return true;
+    }
+    // debugger;
+    for (let i = 0; i < this.tiles.length - 1; i++) {
+    const obj2 = this.tiles[i];
+    console.log(lastTile, obj2);
+    if (lastTile.isCollidedWithVertically(obj2)) {
+        console.log("Collided with tile");
+        lastTile.movable = false;
+        return true;
+    }
+    }
+    return false;
 };
 
 Game.prototype.draw = function draw(ctx) {
@@ -54,7 +54,7 @@ Game.prototype.draw = function draw(ctx) {
 
 Game.prototype.moveObjects = function moveObjects(delta) {
     this.allObjects().forEach(function (object) {
-        object.move(delta);
+        if (object.movable) object.move(delta);
     });
 };
 
@@ -68,7 +68,7 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 
 Game.prototype.step = function step(delta) {
     this.moveObjects(delta);
-    this.checkCollisions();
+    // this.checkCollisions();
 };
 
 module.exports = Game;

@@ -1,6 +1,6 @@
 
 class Tile {
-    constructor(letters = ["A", "B", "C", "D"], width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60) {
+    constructor(letters = ["A", "B", "C", "D"], width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60, movable = true) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -11,6 +11,7 @@ class Tile {
         this.letter = this.letters[this.currentLetterIdx];
         this.x = x;
         this.y = y;
+        this.movable = movable;
     }
 
     draw(ctx) {
@@ -36,6 +37,30 @@ class Tile {
         this.currentLetterIdx = (this.currentLetterIdx + 1) % 4;
         this.letter = this.letters[this.currentLetterIdx];
     }
+
+    isCollidedWithVertically(otherObject) {
+        const maxY = this.y + 60;
+        const otherMaxY = otherObject.y + 60;
+        console.log("Moving Object: ", this.y, maxY);
+        console.log("Other Object: ", otherObject.y, otherMaxY);
+        if ( this.x == otherObject.x && (maxY == otherObject.y || this.y == otherMaxY) ) {
+            return true;
+        }
+        return false;
+    };
+
+    // isCollidedWithHorizontally(otherObject) {
+    //     const maxX = this.x + 60;
+    //     const maxY = this.y + 60;
+    //     const otherMaxX = otherObject.x + 60;
+    //     const otherMaxY = otherObject.y + 60;
+    //     console.log("Moving Object: ", this.x, this.y, maxX, maxY);
+    //     console.log("Other Object: ", otherObject.x, otherObject.y, otherMaxX, otherMaxY);
+    //     if ( maxX == otherObject.x || maxY == otherObject.y || this.x == otherMaxX || this.y == otherMaxY ) {
+    //         return true;
+    //     }
+    //     return false;
+    // };
 
 }
 

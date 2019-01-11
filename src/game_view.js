@@ -9,8 +9,7 @@ GameView.MOVES = {
     d: 1
 };
 
-GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
-    const tile = this.game.tiles ? this.game.tiles[this.game.tiles.length - 1] : this.tile;
+GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
 
     document.addEventListener('keypress', (event) => {
         if (event.keyCode == 97) {
@@ -45,7 +44,7 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
 };
 
 GameView.prototype.start = function start() {
-    this.bindKeyHandlers();
+    this.bindKeyHandlers(this.tile);
     this.lastTime = 0;
     // start the animation
     requestAnimationFrame(this.animate.bind(this));
@@ -61,6 +60,10 @@ GameView.prototype.render = function render(time) {
 GameView.prototype.animate = async function animate(time) {
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
+    if ( this.game.checkVerticalCollisions() ) {
+        newTile = this.game.addTile();
+        this.bindKeyHandlers(newTile);
+    }
     this.ctx.clearRect(0, 0, 600, 600);
     this.game.draw(this.ctx);
     this.lastTime = time;

@@ -2,6 +2,7 @@ function GameView(game, ctx) {
     this.ctx = ctx;
     this.game = game;
     this.tile = this.game.addTile();
+    this.letter = this.game.addLetter();
 }
 
 GameView.MOVES = {
@@ -11,6 +12,7 @@ GameView.MOVES = {
 
 GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
     const tile = this.tile;
+    const letter = this.letter;
 
     document.addEventListener('keypress', (event) => {
         if (event.keyCode == 97) {
@@ -19,29 +21,29 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
         } else if (event.keyCode == 100) {
             tile.shift(1); // d
             requestAnimationFrame(this.render.bind(this));
+        } else if (event.keyCode == 119) {
+            letter.toggleLetter();
+            requestAnimationFrame(this.render.bind(this));
         } else {
-            console.log("no key pressed", event.keyCode);
+            // console.log("other key pressed ", event.keyCode);
         }
     })
 
     document.addEventListener('keydown', (event) => {
         if (event.keyCode == 37) {
-            tile.shift(-1); // left arrow
-            requestAnimationFrame(this.render.bind(this));
+          tile.shift(-1); // left arrow
+          requestAnimationFrame(this.render.bind(this));
         } else if (event.keyCode == 39) {
-            tile.shift(1); // right arrow
-            requestAnimationFrame(this.render.bind(this));
+          tile.shift(1); // right arrow
+          requestAnimationFrame(this.render.bind(this));
+        } else if (event.keyCode == 38) {
+          letter.toggleLetter();
+          requestAnimationFrame(this.render.bind(this));
         } else {
-            console.log("no key down", event.keyCode);
+        //   console.log("other key pressed 2 ", event.keyCode);
         }
     })
 
-    // Object.keys(GameView.MOVES).forEach(function (k) {
-    //     const move = GameView.MOVES[k];
-    //     key(k, function () { tile.shift(move); });
-    // });
-
-    // key("space", function () { ship.fireBullet(); });
 };
 
 GameView.prototype.start = function start() {

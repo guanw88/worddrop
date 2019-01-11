@@ -1,7 +1,9 @@
 const Tile = require("./tile");
+const Letter = require("./letter");
 
 function Game() {
     this.tiles = [];
+    this.letters = [];
 }
 
 Game.DIM_X = 600;
@@ -10,6 +12,8 @@ Game.DIM_Y = 600;
 Game.prototype.add = function add(object) {
     if (object instanceof Tile) {
         this.tiles.push(object);
+    } else if (object instanceof Letter) {
+        this.letters.push(object);
     } else {
         throw new Error("unknown type of object");
     }
@@ -21,8 +25,14 @@ Game.prototype.addTile = function addTile() {
     return newTile;
 };
 
+Game.prototype.addLetter = function addLetter() {
+    const newLetter = new Letter();
+    this.add(newLetter);
+    return newLetter;
+};
+
 Game.prototype.allObjects = function allObjects() {
-    return [].concat(this.tiles);
+    return [].concat(this.letters, this.tiles);
 };
 
 // Game.prototype.checkCollisions = function checkCollisions() {

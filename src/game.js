@@ -1,7 +1,7 @@
 const Tile = require("./tile");
 
 function Game() {
-    this.tiles = [];
+    this.tiles = this.tiles || [];
 }
 
 Game.DIM_X = 600;
@@ -25,20 +25,26 @@ Game.prototype.allObjects = function allObjects() {
     return [].concat(this.tiles);
 };
 
-// Game.prototype.checkCollisions = function checkCollisions() {
-//     const allObjects = this.allObjects();
-//     for (let i = 0; i < allObjects.length; i++) {
-//         for (let j = 0; j < allObjects.length; j++) {
-//             const obj1 = allObjects[i];
-//             const obj2 = allObjects[j];
+Game.prototype.checkCollisions = function checkCollisions() {
+    console.log("Checking collisions");
+    let lastTile = this.tiles[this.tiles.length - 1];
+    console.log(this.tiles, lastTile);
+    if (lastTile && lastTile.y >= 540) {
+        debugger;
+        lastTile = this.addTile();
+    };
+    // for (let i = 0; i < allObjects.length; i++) {
+    //     for (let j = 0; j < allObjects.length; j++) {
+    //         const obj1 = allObjects[i];
+    //         const obj2 = allObjects[j];
 
-//             if (obj1.isCollidedWith(obj2)) {
-//                 const collision = obj1.collideWith(obj2);
-//                 if (collision) return;
-//             }
-//         }
-//     }
-// };
+    //         if (obj1.isCollidedWith(obj2)) {
+    //             const collision = obj1.collideWith(obj2);
+    //             if (collision) return;
+    //         }
+    //     }
+    // }
+};
 
 Game.prototype.draw = function draw(ctx) {
     this.allObjects().forEach(function (object) {
@@ -62,7 +68,7 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 
 Game.prototype.step = function step(delta) {
     this.moveObjects(delta);
-    // this.checkCollisions();
+    this.checkCollisions();
 };
 
 module.exports = Game;

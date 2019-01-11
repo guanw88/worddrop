@@ -10,7 +10,7 @@ GameView.MOVES = {
 };
 
 GameView.prototype.bindKeyHandlers = function bindKeyHandlers() {
-    const tile = this.tile;
+    const tile = this.game.tiles ? this.game.tiles[this.game.tiles.length - 1] : this.tile;
 
     document.addEventListener('keypress', (event) => {
         if (event.keyCode == 97) {

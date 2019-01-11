@@ -14,10 +14,8 @@ class Tile {
     }
 
     draw(ctx) {
-        console.log("tile added");
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        console.log("letter added");
         ctx.font = "30px News Gothic Standard";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";

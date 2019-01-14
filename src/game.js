@@ -3,10 +3,25 @@ const Tile = require("./tile");
 function Game() {
     this.tiles = this.tiles || [];
     this.letters = this.resetLetters();
+    this.dictionary = this.loadDictionary();
 }
 
 Game.DIM_X = 600;
 Game.DIM_Y = 600;
+
+Game.prototype.loadDictionary = function loadDictionary(dictionary) {
+    fetch("../src/assets/sowpods.txt").then( (response) => {
+        response.text().then( (text) => {
+            this.dictionary = []
+            const words = text.split(/\r\n|\n/);
+            words.forEach( (word) => {
+                if (word.length >= 4) this.dictionary.push(word);
+            });
+            console.log(this.dictionary.length, " words in dictionary");
+            return this.dictionary;
+        })
+    });
+}
 
 Game.prototype.add = function add(object) {
     if (object instanceof Tile) {
@@ -82,7 +97,7 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
         const obj2 = this.tiles[i];
         // console.log(lastTile, obj2);
         if (lastTile.isCollidedWithVertically(obj2)) {
-            console.log("Collided with tile");
+            // console.log("Collided with tile");
             this.removeLetter(lastTile.letter);
             lastTile.movable = false;
             return true;
@@ -92,11 +107,11 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
 };
 
 Game.prototype.checkLeftCollision = function checkLeftCollision() {
-    console.log("Checking left collision");
+    // console.log("Checking left collision");
     let lastTile = this.tiles[this.tiles.length - 1];
     // console.log(lastTile.x, lastTile.y);
     if ( lastTile && lastTile.x <= 0 ) {
-        console.log("Collided with wall");
+        // console.log("Collided with wall");
         return true;
         }
     // debugger;
@@ -104,7 +119,7 @@ Game.prototype.checkLeftCollision = function checkLeftCollision() {
         const obj2 = this.tiles[i];
         // console.log(lastTile, obj2);
         if (lastTile.isCollidedWithLeft(obj2)) {
-            console.log("Collided with tile on left");
+            // console.log("Collided with tile on left");
             return true;
         }
     }
@@ -112,11 +127,11 @@ Game.prototype.checkLeftCollision = function checkLeftCollision() {
 };
 
 Game.prototype.checkRightCollision = function checkRightCollision() {
-    console.log("Checking right collisions");
+    // console.log("Checking right collisions");
     let lastTile = this.tiles[this.tiles.length - 1];
     // console.log(lastTile.x, lastTile.y);
     if ( lastTile && lastTile.x >= 540 ) {
-        console.log("Collided with wall");
+        // console.log("Collided with wall");
         return true;
         }
     // debugger;
@@ -124,7 +139,7 @@ Game.prototype.checkRightCollision = function checkRightCollision() {
         const obj2 = this.tiles[i];
         // console.log(lastTile, obj2);
         if (lastTile.isCollidedWithRight(obj2)) {
-            console.log("Collided with tile on right");
+            // console.log("Collided with tile on right");
             return true;
         }
     }

@@ -48,7 +48,7 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
             tile.drop(1); // s
             requestAnimationFrame(render);
         } else {
-            console.log("other key pressed 2 ", event.keyCode);
+            // console.log("other key pressed 2 ", event.keyCode);
         }
     }
 

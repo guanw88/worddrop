@@ -1,6 +1,6 @@
 
 class Tile {
-    constructor(letters = ["A", "B", "C", "D"], width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60, movable = true) {
+    constructor(letters, width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60, movable = true) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -34,7 +34,7 @@ class Tile {
     }
     
     drop(units) {
-        console.log("moving tile down");
+        // console.log("moving tile down");
         const new_y_pos = this.y + units * 60; // looser collision detection in case drop is synchronized with step
         if (new_y_pos >= 0 && new_y_pos <= 540) this.y += units * 60;
     }

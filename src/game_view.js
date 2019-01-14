@@ -96,8 +96,8 @@ GameView.prototype.animate = async function animate(time) {
     const sleep = function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-    // await sleep(1000);
-    await sleep(400);
+    await sleep(1000);
+    // await sleep(400);
     requestAnimationFrame(this.animate.bind(this));
 };
 

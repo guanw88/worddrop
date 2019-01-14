@@ -90,6 +90,8 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
     if (lastTile && lastTile.y >= 540) {
         // console.log("Collided with floor");
         this.removeLetter(lastTile.letter);
+        this.checkWords();
+        lastTile.movable = false;
         return true;
     }
     // debugger;
@@ -99,6 +101,7 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
         if (lastTile.isCollidedWithVertically(obj2)) {
             // console.log("Collided with tile");
             this.removeLetter(lastTile.letter);
+            this.checkWords();
             lastTile.movable = false;
             return true;
         }
@@ -170,5 +173,25 @@ Game.prototype.step = function step(delta) {
     if (this.checkVerticalCollisions() === false) this.moveObjects(delta);
     // this.checkCollisions();
 };
+
+Game.prototype.checkWords = function checkWords() {
+    console.log("Checking words");
+    const letterGrid = [
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null],
+        [null, null, null, null, null, null, null, null, null, null]
+    ]
+    this.tiles.forEach( (tile) => {
+        letterGrid[tile.x/60][tile.y/60] = tile.letter;
+    });
+    console.log(letterGrid);
+}
 
 module.exports = Game;

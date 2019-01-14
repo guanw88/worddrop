@@ -49,18 +49,16 @@ class Tile {
         return false;
     };
 
-    // isCollidedWithHorizontally(otherObject) {
-    //     const maxX = this.x + 60;
-    //     const maxY = this.y + 60;
-    //     const otherMaxX = otherObject.x + 60;
-    //     const otherMaxY = otherObject.y + 60;
-    //     console.log("Moving Object: ", this.x, this.y, maxX, maxY);
-    //     console.log("Other Object: ", otherObject.x, otherObject.y, otherMaxX, otherMaxY);
-    //     if ( maxX == otherObject.x || maxY == otherObject.y || this.x == otherMaxX || this.y == otherMaxY ) {
-    //         return true;
-    //     }
-    //     return false;
-    // };
+    isCollidedWithHorizontally(otherObject) {
+        const maxX = this.x + 60;
+        const otherMaxX = otherObject.x + 60;
+        console.log("Moving Object: ", this.x, maxX);
+        console.log("Other Object: ", otherObject.x, otherMaxX);
+        if ( this.y == otherObject.y && (maxX == otherObject.x || this.x == otherMaxX) ) {
+            return true;
+        }
+        return false;
+    };
 
 }
 

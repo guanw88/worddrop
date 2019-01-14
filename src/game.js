@@ -91,11 +91,11 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
     return false;
 };
 
-Game.prototype.checkHorizontalCollisions = function checkHorizontalCollisions() {
-    console.log("Checking horizontal collisions");
+Game.prototype.checkLeftCollision = function checkLeftCollision() {
+    console.log("Checking left collision");
     let lastTile = this.tiles[this.tiles.length - 1];
     // console.log(lastTile.x, lastTile.y);
-    if ( lastTile && (lastTile.x >= 540 || lastTile.x <= 0) ) {
+    if ( lastTile && lastTile.x <= 0 ) {
         console.log("Collided with wall");
         return true;
         }
@@ -103,9 +103,28 @@ Game.prototype.checkHorizontalCollisions = function checkHorizontalCollisions() 
     for (let i = 0; i < this.tiles.length - 1; i++) {
         const obj2 = this.tiles[i];
         // console.log(lastTile, obj2);
-        if (lastTile.isCollidedWithHorizontally(obj2)) {
-            console.log("Collided with tile horizontally");
-            lastTile.movable = false;
+        if (lastTile.isCollidedWithLeft(obj2)) {
+            console.log("Collided with tile on left");
+            return true;
+        }
+    }
+    return false;
+};
+
+Game.prototype.checkRightCollision = function checkRightCollision() {
+    console.log("Checking right collisions");
+    let lastTile = this.tiles[this.tiles.length - 1];
+    // console.log(lastTile.x, lastTile.y);
+    if ( lastTile && lastTile.x >= 540 ) {
+        console.log("Collided with wall");
+        return true;
+        }
+    // debugger;
+    for (let i = 0; i < this.tiles.length - 1; i++) {
+        const obj2 = this.tiles[i];
+        // console.log(lastTile, obj2);
+        if (lastTile.isCollidedWithRight(obj2)) {
+            console.log("Collided with tile on right");
             return true;
         }
     }

@@ -11,16 +11,23 @@ GameView.MOVES = {
 
 GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
     render = this.render.bind(this);
+    checkLeftCollision = this.game.checkLeftCollision.bind(this.game);
+    checkRightCollision = this.game.checkRightCollision.bind(this.game);
+    checkVerticalCollisions = this.game.checkVerticalCollisions.bind(this.game);
+
 
     function handleKeypress(event) {
-        if (event.keyCode == 97) {
-            tile.shift(-1); // a
-            requestAnimationFrame(render);
-        } else if (event.keyCode == 100) {
+        if (event.keyCode == 97 && checkLeftCollision() === false) {
+          tile.shift(-1); // a
+          requestAnimationFrame(render);
+        } else if (event.keyCode == 100 && checkRightCollision() === false) {
             tile.shift(1); // d
             requestAnimationFrame(render);
         } else if (event.keyCode == 119) {
-            tile.toggleLetter();
+            tile.toggleLetter(); // w
+            requestAnimationFrame(render);
+        } else if (event.keyCode == 115 && checkVerticalCollisions() === false) {
+            tile.drop(1); // s
             requestAnimationFrame(render);
         } else {
             // console.log("other key pressed ", event.keyCode);
@@ -28,17 +35,20 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
     }
 
     function handleKeydown(event) {
-        if (event.keyCode == 37) {
-            tile.shift(-1); // left arrow
-            requestAnimationFrame(render);
-        } else if (event.keyCode == 39) {
+        if (event.keyCode == 37 && checkLeftCollision() === false) {
+          tile.shift(-1); // left arrow
+          requestAnimationFrame(render);
+        } else if (event.keyCode == 39 && checkRightCollision() === false) {
             tile.shift(1); // right arrow
             requestAnimationFrame(render);
         } else if (event.keyCode == 38) {
             tile.toggleLetter();
             requestAnimationFrame(render);
+        } else if (event.keyCode == 40 && checkVerticalCollisions() === false) {
+            tile.drop(1); // s
+            requestAnimationFrame(render);
         } else {
-            //   console.log("other key pressed 2 ", event.keyCode);
+            console.log("other key pressed 2 ", event.keyCode);
         }
     }
 

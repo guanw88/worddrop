@@ -32,6 +32,12 @@ class Tile {
         const new_x_pos = this.x + units * 60;
         if (new_x_pos >= 0 && new_x_pos <= 540) this.x += units * 60;
     }
+    
+    drop(units) {
+        console.log("moving tile down");
+        const new_y_pos = this.y + units * 60; // looser collision detection in case drop is synchronized with step
+        if (new_y_pos >= 0 && new_y_pos <= 540) this.y += units * 60;
+    }
 
     toggleLetter() {
         this.currentLetterIdx = (this.currentLetterIdx + 1) % 4;
@@ -49,12 +55,17 @@ class Tile {
         return false;
     };
 
-    isCollidedWithHorizontally(otherObject) {
-        const maxX = this.x + 60;
+    isCollidedWithLeft(otherObject) {
         const otherMaxX = otherObject.x + 60;
-        console.log("Moving Object: ", this.x, maxX);
-        console.log("Other Object: ", otherObject.x, otherMaxX);
-        if ( this.y == otherObject.y && (maxX == otherObject.x || this.x == otherMaxX) ) {
+        if ( this.y == otherObject.y && this.x == otherMaxX ) {
+            return true;
+        }
+        return false;
+    };
+
+    isCollidedWithRight(otherObject) {
+        const maxX = this.x + 60;
+        if ( this.y == otherObject.y && maxX == otherObject.x ) {
             return true;
         }
         return false;

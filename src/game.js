@@ -82,7 +82,7 @@ Game.prototype.checkVerticalCollisions = function checkVerticalCollisions() {
         const obj2 = this.tiles[i];
         // console.log(lastTile, obj2);
         if (lastTile.isCollidedWithVertically(obj2)) {
-            // console.log("Collided with tile");
+            console.log("Collided with tile");
             this.removeLetter(lastTile.letter);
             lastTile.movable = false;
             return true;
@@ -152,7 +152,7 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 // };
 
 Game.prototype.step = function step(delta) {
-    this.moveObjects(delta);
+    if (this.checkVerticalCollisions() === false) this.moveObjects(delta);
     // this.checkCollisions();
 };
 

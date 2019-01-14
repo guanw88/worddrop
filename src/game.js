@@ -175,7 +175,7 @@ Game.prototype.step = function step(delta) {
 };
 
 Game.prototype.checkWords = function checkWords() {
-    console.log("Checking words");
+    // console.log("Checking words");
     const letterGrid = [
         [null, null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null, null],
@@ -189,9 +189,87 @@ Game.prototype.checkWords = function checkWords() {
         [null, null, null, null, null, null, null, null, null, null]
     ]
     this.tiles.forEach( (tile) => {
-        letterGrid[tile.x/60][tile.y/60] = tile.letter;
+        letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
     });
+    // Check columns and reversed columns for words 
+    let validWords = [];
+    letterGrid.forEach( column => {
+        let candidateWords = this.generateCandidateWords(column);
+        candidateWords.forEach( (word) => {
+            if (this.checkWord(word) && validWords.includes(word) === false) validWords.push(word);
+        })
+    });
+
+    // Check rows and reverse rows for words 
+    const transposed = letterGrid;
+    for (let i = 0; i < transposed.length; i++) {
+        for (let j = 0; j < i; j++) {
+            [transposed[i][j], transposed[j][i]] = [transposed[j][i], transposed[i][j]];
+        }
+    }
+    transposed.forEach(row => {
+        let candidateWords = this.generateCandidateWords(row);
+        candidateWords.forEach((word) => {
+            if (this.checkWord(word) && validWords.includes(word) === false) validWords.push(word);
+        })
+        console.log(validWords);
+    });
+
+
     console.log(letterGrid);
+}
+
+Game.prototype.generateCandidateWords = function generateCandidateWords(array) {
+    // console.log("Generating candidate words...");
+    let string = "";
+    array.forEach( (char) => {
+        if (char === null) {
+            string += " ";
+        } else {
+            string += char;
+        }
+    });
+    let candidateWords = [];
+    string.split(" ").filter( (str) => str.length >= 4 ).forEach( (str) => {
+        // console.log(str);
+        for (let i = 0; i < str.length; i++) {
+            let temp = str[i];
+            for (let j = i + 1; j < str.length; j++) {
+                temp += str[j];
+                if (temp.length >= 4) {
+                    candidateWords.push(temp);
+                    let reverse_temp = temp.split("").reverse().join("");
+                    if (temp !== reverse_temp) candidateWords.push(reverse_temp);
+                }
+            }
+        }
+    });
+    return candidateWords;
+}
+
+Game.prototype.checkWord = function checkWord(str) {
+    console.log("Checking word ", str);
+    let minIdx = 0;
+    let maxIdx = this.dictionary.length - 1;
+    let idx;
+    let el;
+
+    while (minIdx <= maxIdx) {
+        idx = Math.floor((minIdx + maxIdx) / 2);
+        el = this.dictionary[idx];
+
+        if (el < str) {
+            minIdx = idx + 1;
+        }
+        else if (el > str) {
+            maxIdx = idx - 1;
+        }
+        else {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 module.exports = Game;

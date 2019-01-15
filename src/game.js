@@ -369,13 +369,19 @@ Game.prototype.destroyTiles = function destroyTiles() {
 }
 
 Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
-    console.log("Filling missing space");
+    // console.log("Filling missing space");
     for (let colIdx = 0; colIdx < 10; colIdx++) {
         // loop through each column and verify if bottom most tile is touching bottom 
         let tilesInCol = this.tiles.filter((tile) => tile.x === colIdx * 60);
-        let maxY = Math.max(...tilesInCol.map(tile => {return tile.y}));
+        let tileYValues = tilesInCol.map(tile => {return tile.y});
+        // console.log(tileYValues);
+        let maxGap = 0;
+        for (let rowIdx = 0; rowIdx < 10; rowIdx++) {
+            if (!tileYValues.includes(rowIdx * 60)) maxGap = rowIdx * 60;
+        }
+        // console.log(colIdx, maxGap);
         tilesInCol.forEach( tile => {
-            tile.movable = (maxY === 540 ? false : true)
+            tile.movable = (tile.y < maxGap) ? true : false;
         });
     }
     let lastTile = this.tiles[this.tiles.length - 1];

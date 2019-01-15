@@ -50,7 +50,7 @@ class Tile {
         const otherMaxY = otherObject.y + 60;
         // console.log("Moving Object: ", this.y, maxY);
         // console.log("Other Object: ", otherObject.y, otherMaxY);
-        if ( this.x == otherObject.x && (maxY == otherObject.y || this.y == otherMaxY) ) {
+        if ( this.x == otherObject.x && (maxY == otherObject.y) ) {
             return true;
         }
         return false;

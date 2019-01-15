@@ -177,6 +177,7 @@ Game.prototype.moveObjects = function moveObjects(delta) {
 // };
 
 Game.prototype.step = function step(delta) {
+    this.fillMissingSpaces();
     if (this.checkVerticalCollisions() === false) this.moveObjects(delta);
     // this.checkCollisions();
 };
@@ -356,15 +357,29 @@ Game.prototype.destroyTiles = function destroyTiles() {
     this.validWords = [];
     this.validTiles = [];
     this.validTileSet = new Set();
+    this.fillMissingSpaces();
     this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.tiles.forEach((tile) => {
         // debugger;
         this.tileGrid[tile.x / 60][tile.y / 60] = tile;
         this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
-        tile.movable = true;
     });
     this.checkWords();
+}
+
+Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
+    console.log("Filling missing space");
+    for (let colIdx = 0; colIdx < 10; colIdx++) {
+        // loop through each column and verify if bottom most tile is touching bottom 
+        let tilesInCol = this.tiles.filter((tile) => tile.x === colIdx * 60);
+        let maxY = Math.max(...tilesInCol.map(tile => {return tile.y}));
+        tilesInCol.forEach( tile => {
+            tile.movable = (maxY === 540 ? false : true)
+        });
+    }
+    let lastTile = this.tiles[this.tiles.length - 1];
+    lastTile.movable = true;
 }
 
 module.exports = Game;

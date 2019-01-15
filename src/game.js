@@ -352,12 +352,19 @@ Game.prototype.highlightTiles = function highlightTiles() {
 
 Game.prototype.destroyTiles = function destroyTiles() {
     let highlighted = Array.from(this.validTileSet);
+    this.tiles = this.tiles.filter( (tile) => !highlighted.includes(tile.id) );
+    this.validWords = [];
+    this.validTiles = [];
+    this.validTileSet = new Set();
+    this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
+    this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.tiles.forEach((tile) => {
-        if (highlighted.includes(tile.id)) {
-            // destroy tile
-        }
+        // debugger;
+        this.tileGrid[tile.x / 60][tile.y / 60] = tile;
+        this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
+        tile.movable = true;
     });
-    // reset params
+    this.checkWords();
 }
 
 module.exports = Game;

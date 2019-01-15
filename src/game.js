@@ -2,8 +2,14 @@ const Tile = require("./tile");
 
 function Game() {
     this.tiles = this.tiles || [];
+    this.id = 1;
     this.letters = this.resetLetters();
     this.dictionary = this.loadDictionary();
+    this.validWords = [];
+    this.validTiles = [];
+    this.validTileSet = new Set();
+    this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
+    this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
 }
 
 Game.DIM_X = 600;
@@ -17,7 +23,7 @@ Game.prototype.loadDictionary = function loadDictionary(dictionary) {
             words.forEach( (word) => {
                 if (word.length >= 4) this.dictionary.push(word);
             });
-            console.log(this.dictionary.length, " words in dictionary");
+            // console.log(this.dictionary.length, " words in dictionary");
             return this.dictionary;
         })
     });
@@ -74,8 +80,9 @@ Game.prototype.removeLetter = function removeLetter(letter) {
 }
 
 Game.prototype.addTile = function addTile() {
-    const newTile = new Tile(this.rand4());
+    const newTile = new Tile(this.id, this.rand4());
     this.add(newTile);
+    this.id += 1;
     return newTile;
 };
 
@@ -176,47 +183,44 @@ Game.prototype.step = function step(delta) {
 
 Game.prototype.checkWords = function checkWords() {
     // console.log("Checking words");
-    const letterGrid = [
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null]
-    ]
+    
     this.tiles.forEach( (tile) => {
-        letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
+        this.tileGrid[tile.x / 60][tile.y / 60] = tile;
+        this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
     });
     // Check columns and reversed columns for words 
-    let validWords = [];
-    letterGrid.forEach( column => {
+    this.letterGrid.forEach( (column) => {
         let candidateWords = this.generateCandidateWords(column);
         candidateWords.forEach( (word) => {
-            if (this.checkWord(word) && validWords.includes(word) === false) validWords.push(word);
+            if (this.checkWord(word) && this.validWords.includes(word) === false) this.validWords.push(word);
         })
     });
 
     // Check rows and reverse rows for words 
-    const transposed = letterGrid;
+    const transposed = this.letterGrid;
     for (let i = 0; i < transposed.length; i++) {
         for (let j = 0; j < i; j++) {
             [transposed[i][j], transposed[j][i]] = [transposed[j][i], transposed[i][j]];
         }
     }
-    transposed.forEach(row => {
+    transposed.forEach( (row) => {
         let candidateWords = this.generateCandidateWords(row);
         candidateWords.forEach((word) => {
-            if (this.checkWord(word) && validWords.includes(word) === false) validWords.push(word);
-        })
-        console.log(validWords);
+            if (this.checkWord(word) && this.validWords.includes(word) === false) this.validWords.push(word);
+        });
     });
+    // console.log(this.letterGrid);
+    // console.log(this.validWords);
 
-
-    console.log(letterGrid);
+    if (this.validWords.length > 0) {
+        this.validWords.forEach( word => {
+            this.listValidTiles(word);
+            word = word.split("").reverse().join("");
+            this.listValidTiles(word);
+        });
+    }
+    this.highlightTiles();
+    // console.log(this.letterGrid);
 }
 
 Game.prototype.generateCandidateWords = function generateCandidateWords(array) {
@@ -248,7 +252,6 @@ Game.prototype.generateCandidateWords = function generateCandidateWords(array) {
 }
 
 Game.prototype.checkWord = function checkWord(str) {
-    console.log("Checking word ", str);
     let minIdx = 0;
     let maxIdx = this.dictionary.length - 1;
     let idx;
@@ -268,8 +271,93 @@ Game.prototype.checkWord = function checkWord(str) {
             return true;
         }
     }
-
     return false;
+}
+
+Game.prototype.listValidTiles = function listValidTiles(word) {
+    this.tileGrid.forEach( (col, colIdx) => {
+        // console.log(col);
+        let colStr = "";
+        col.forEach(tile => {
+            if (tile) colStr += tile.letter.toLowerCase();
+        });
+        // console.log(colStr);
+        if (colStr.includes(word)) {
+            let tempWord = word.split("");
+            let tempIds = [];
+            for (let i = 0; i <= col.length; i++) {
+                // debugger;
+                if (tempWord.length === 0) {
+                    // console.log("Saving tempids");
+                    this.validTiles = this.validTiles.concat(tempIds);
+                    this.validTileSet = new Set(this.validTiles);
+                } else if (col[i] && col[i].letter.toLowerCase() === tempWord[0]) {
+                    // console.log("Letter matches");
+                    tempWord.shift();
+                    tempIds.push(col[i].id);
+                } else {
+                    // console.log("Resetting...");
+                    tempWord = word.split("");
+                    tempIds = [];
+                }
+            }
+        }
+    });
+
+    const transposed = this.tileGrid;
+    for (let i = 0; i < transposed.length; i++) {
+      for (let j = 0; j < i; j++) {
+        [transposed[i][j], transposed[j][i]] = [transposed[j][i], transposed[i][j]];
+      }
+    }
+
+    transposed.forEach((row, rowIdx) => {
+        // console.log(row);
+        let rowStr = "";
+        row.forEach(tile => {
+            if (tile) rowStr += tile.letter.toLowerCase();
+        });
+        // console.log(rowStr);
+        if (rowStr.includes(word)) {
+            let tempWord = word.split("");
+            let tempIds = [];
+            for (let i = 0; i <= row.length; i++) {
+                // debugger;
+                if (tempWord.length === 0) {
+                    // console.log("Saving tempids");
+                    this.validTiles = this.validTiles.concat(tempIds);
+                    this.validTileSet = new Set(this.validTiles);
+                } else if (row[i] && row[i].letter.toLowerCase() === tempWord[0]) {
+                    // console.log("Letter matches");
+                    tempWord.shift();
+                    tempIds.push(row[i].id);
+                } else {
+                    // console.log("Resetting...");
+                    tempWord = word.split("");
+                    tempIds = [];
+                }
+            }
+        }
+    });
+};
+
+Game.prototype.highlightTiles = function highlightTiles() {
+    let highlighted = Array.from(this.validTileSet);
+    this.tiles.forEach( (tile) => {
+      if (highlighted.includes(tile.id)) {
+          tile.color = "#b7c9b9";
+      }
+    });
+};
+
+Game.prototype.destroyTiles = function destroyTiles() {
+    let highlighted = Array.from(this.validTileSet);
+    this.tiles.forEach((tile) => {
+        if (highlighted.includes(tile.id)) {
+            // destroy tile
+        }
+    });
+    // reset params
 }
 
 module.exports = Game;

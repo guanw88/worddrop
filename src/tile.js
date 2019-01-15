@@ -1,6 +1,7 @@
 
 class Tile {
-    constructor(letters, width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60, movable = true) {
+    constructor(id, letters, width = 60, height = 60, color = "#D4BAAC", x = 240, y = -60, movable = true) {
+        this.id = id;
         this.width = width;
         this.height = height;
         this.x = x;

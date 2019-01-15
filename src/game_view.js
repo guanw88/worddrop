@@ -85,23 +85,28 @@ GameView.prototype.render = function render(time) {
 };
 
 GameView.prototype.animate = async function animate(time) {
-    const timeDelta = time - this.lastTime;
-    this.game.step(timeDelta);
-    if ( this.game.checkVerticalCollisions() ) {
-        // debugger;
-        this.unbindKeyHandlers(this.tile);
-        this.tile = this.game.addTile();
-        this.bindKeyHandlers(this.tile);
+    if (!this.game.gameOver) {
+        const timeDelta = time - this.lastTime;
+        this.game.step(timeDelta);
+        if ( this.game.checkVerticalCollisions() ) {
+            // debugger;
+            this.unbindKeyHandlers(this.tile);
+            this.tile = this.game.addTile();
+            this.bindKeyHandlers(this.tile);
+        }
+        this.ctx.clearRect(0, 0, 600, 600);
+        this.game.draw(this.ctx);
+        this.lastTime = time;
+        const sleep = function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        await sleep(1000);
+        // await sleep(400);
+        requestAnimationFrame(this.animate.bind(this));
+    } else {
+        this.game.drawGameOver(this.ctx);
+        // alert("Game Over");
     }
-    this.ctx.clearRect(0, 0, 600, 600);
-    this.game.draw(this.ctx);
-    this.lastTime = time;
-    const sleep = function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    await sleep(1000);
-    // await sleep(400);
-    requestAnimationFrame(this.animate.bind(this));
 };
 
 module.exports = GameView;

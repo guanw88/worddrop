@@ -10,6 +10,7 @@ function Game() {
     this.validTileSet = new Set();
     this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
+    this.gameOver = false;
 }
 
 Game.DIM_X = 600;
@@ -83,6 +84,10 @@ Game.prototype.addTile = function addTile() {
     const newTile = new Tile(this.id, this.rand4());
     this.add(newTile);
     this.id += 1;
+    let oldTiles = this.tiles.slice(0,-1);
+    if (oldTiles.filter((tile) => (tile.y === 0)).length > 0) {
+        this.gameOver = true;
+    }
     return newTile;
 };
 
@@ -387,5 +392,15 @@ Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
     let lastTile = this.tiles[this.tiles.length - 1];
     lastTile.movable = true;
 }
+
+Game.prototype.drawGameOver = async function drawGameOver(ctx) {
+    ctx.fillStyle = "rgba(0, 0, 200, 0.2)";
+    ctx.fillRect(0, 0, 600, 600);
+    ctx.font = "30px News Gothic Standard";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Game Over! Thanks for playing!", 300, 300);
+};
 
 module.exports = Game;

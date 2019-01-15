@@ -396,11 +396,15 @@ Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
 Game.prototype.drawGameOver = async function drawGameOver(ctx) {
     ctx.fillStyle = "rgba(0, 0, 200, 0.2)";
     ctx.fillRect(0, 0, 600, 600);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(50,150,500,200);
     ctx.font = "30px News Gothic Standard";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("Game Over! Thanks for playing!", 300, 300);
+    ctx.fillText("Game Over! Thanks for playing!", 300, 200);
+    ctx.font = "20px News Gothic Standard";
+    ctx.fillText("Refresh the Page to Play Again", 300, 300);
 };
 
 module.exports = Game;

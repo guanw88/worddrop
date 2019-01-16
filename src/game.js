@@ -17,7 +17,7 @@ Game.DIM_X = 600;
 Game.DIM_Y = 600;
 
 Game.prototype.loadDictionary = function loadDictionary(dictionary) {
-    fetch("https://www.dropbox.com/s/obp9dthwuo7mbib/sowpods.txt?dl=0").then(
+    fetch("/worddrop/src/assets/sowpods.txt").then(
       response => {
         response.text().then(text => {
           this.dictionary = [];

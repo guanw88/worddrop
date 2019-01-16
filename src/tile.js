@@ -18,7 +18,8 @@ class Tile {
     draw(ctx) {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        ctx.font = "30px News Gothic Standard";
+        // ctx.font = "30px News Gothic Standard";
+        ctx.font = "30px Lato";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";

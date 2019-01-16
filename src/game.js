@@ -17,7 +17,7 @@ Game.DIM_X = 600;
 Game.DIM_Y = 600;
 
 Game.prototype.loadDictionary = function loadDictionary(dictionary) {
-    fetch("/dist/assets/sowpods.txt").then( (response) => {
+    fetch("/worddrop/sowpods.txt").then( (response) => {
         response.text().then( (text) => {
             this.dictionary = []
             const words = text.split(/\r\n|\n/);

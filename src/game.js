@@ -21,22 +21,7 @@ Game.DIM_Y = 600;
 
 Game.prototype.loadDictionary = function loadDictionary(dictionary) {
     //live link
-    fetch("/worddrop/src/assets/sowpods.txt").then(
-      response => {
-        response.text().then(text => {
-          this.dictionary = [];
-          const words = text.split(/\r\n|\n/);
-          words.forEach(word => {
-            if (word.length >= 4) this.dictionary.push(word);
-          });
-          // console.log(this.dictionary.length, " words in dictionary");
-          return this.dictionary;
-        });
-      }
-    );
-
-    // testing link
-    // fetch("/src/assets/sowpods.txt").then(
+    // fetch("/worddrop/src/assets/sowpods.txt").then(
     //   response => {
     //     response.text().then(text => {
     //       this.dictionary = [];
@@ -49,6 +34,21 @@ Game.prototype.loadDictionary = function loadDictionary(dictionary) {
     //     });
     //   }
     // );
+
+    // testing link
+    fetch("/src/assets/sowpods.txt").then(
+      response => {
+        response.text().then(text => {
+          this.dictionary = [];
+          const words = text.split(/\r\n|\n/);
+          words.forEach(word => {
+            if (word.length >= 4) this.dictionary.push(word);
+          });
+          // console.log(this.dictionary.length, " words in dictionary");
+          return this.dictionary;
+        });
+      }
+    );
 }
 
 Game.prototype.add = function add(object) {

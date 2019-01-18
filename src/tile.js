@@ -17,19 +17,19 @@ class Tile {
     }
 
     draw(ctx) {
+        const cornerRadius = 5;
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        // ctx.font = "30px News Gothic Standard";
-        ctx.font = "30px Lato";
+        ctx.font = "60px Scramble";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(this.letter, this.x + 30, this.y+32);
-        ctx.font = "16px Lato";
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillText(this.score, this.x + 50, this.y + 48);
+        // ctx.font = "16px Lato";
+        // ctx.fillStyle = "black";
+        // ctx.textAlign = "center";
+        // ctx.textBaseline = "middle";
+        // ctx.fillText(this.score, this.x + 50, this.y + 48);
     }
 
     move(delta) {

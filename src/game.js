@@ -3,6 +3,7 @@ const Tile = require("./tile");
 function Game() {
     this.tiles = this.tiles || [];
     this.id = 1;
+    this.difficulty = 1;
     this.letters = this.resetLetters();
     this.dictionary = this.loadDictionary();
     this.validWords = [];
@@ -107,6 +108,7 @@ Game.prototype.addTile = function addTile() {
     const newTile = new Tile(this.id, this.rand4());
     this.add(newTile);
     this.id += 1;
+    if (this.difficulty < 9 && this.id > (this.difficulty * 25)) this.difficulty += 1;
     let oldTiles = this.tiles.slice(0,-1);
     if (oldTiles.filter((tile) => (tile.y < 0)).length > 0) {
         this.gameOver = true;
@@ -191,10 +193,13 @@ Game.prototype.draw = function draw(ctx) {
     ctx.font = "16px Lato";
     ctx.fillStyle = "black";
     ctx.textAlign = "left";
+    let scoreText = "Score: " + this.totalScore;
     let bestWordText;
     this.bestScore === 0 ? (bestWordText = "") : 
         (bestWordText = "  Best Word: " + this.bestWord.charAt(0).toUpperCase() + this.bestWord.slice(1) + " (" + this.bestScore + ")");
-    ctx.fillText("Score: " + this.totalScore + bestWordText, 5, 12);
+    let difficultyText = " Difficulty: " + this.difficulty;
+    let numTilesText = " Tiles Placed: " + (this.id - 2);
+    ctx.fillText(scoreText + bestWordText + difficultyText + numTilesText, 5, 12);
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {

@@ -111,7 +111,9 @@ GameView.prototype.animate = async function animate(time) {
         const sleep = function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-        await sleep(1000);
+        const sleepTime = 1000 - 100 * (this.game.difficulty - 1);
+        // console.log(sleepTime);
+        await sleep(sleepTime);
         // await sleep(400);
         requestAnimationFrame(this.animate.bind(this));
     } else {

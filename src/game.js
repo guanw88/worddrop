@@ -17,6 +17,7 @@ Game.DIM_X = 600;
 Game.DIM_Y = 600;
 
 Game.prototype.loadDictionary = function loadDictionary(dictionary) {
+    //live link
     fetch("/worddrop/src/assets/sowpods.txt").then(
       response => {
         response.text().then(text => {
@@ -30,6 +31,21 @@ Game.prototype.loadDictionary = function loadDictionary(dictionary) {
         });
       }
     );
+
+    // testing link
+    // fetch("/src/assets/sowpods.txt").then(
+    //   response => {
+    //     response.text().then(text => {
+    //       this.dictionary = [];
+    //       const words = text.split(/\r\n|\n/);
+    //       words.forEach(word => {
+    //         if (word.length >= 4) this.dictionary.push(word);
+    //       });
+    //       // console.log(this.dictionary.length, " words in dictionary");
+    //       return this.dictionary;
+    //     });
+    //   }
+    // );
 }
 
 Game.prototype.add = function add(object) {
@@ -41,7 +57,7 @@ Game.prototype.add = function add(object) {
 };
 
 Game.prototype.resetLetters = function resetLetters() {
-    // letter_freq = {"A": 1, "B": 1, "C": 1, "D": 1}; // letter freq for testing
+    // letter_freq = {"C": 1, "A": 1, "T": 1, "S": 1}; // letter freq for testing
     // letter_freq = {"A": 9, "B": 2, "C": 2, "D": 4}; // letter freq for testing
     letter_freq = {"A": 9, "B": 2, "C": 2, "D": 4, "E": 12, "F": 2, "G": 3, "H": 2, "I": 9, "J": 1, 
         "K": 1, "L": 4, "M": 2, "N": 6, "O": 8, "P": 2, "Q": 1, "R": 6, "S": 4, "T": 6,
@@ -65,7 +81,9 @@ Game.prototype.randomize = function randomize(arr) {
 }
 
 Game.prototype.rand4 = function rand4() {
-    random = this.randomize(this.letters).slice(0,4);
+    min_length = Math.min(this.letters.length, 4);
+    random = this.randomize(this.letters).slice(0,min_length);
+    // console.log(this.letters);
     // console.log(random);
     return random;
 }

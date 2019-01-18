@@ -42,7 +42,7 @@ class Tile {
     }
 
     toggleLetter() {
-        this.currentLetterIdx = (this.currentLetterIdx + 1) % 4;
+        this.currentLetterIdx = (this.currentLetterIdx + 1) % this.letters.length;
         this.letter = this.letters[this.currentLetterIdx];
     }
 

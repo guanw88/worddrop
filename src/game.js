@@ -9,6 +9,8 @@ function Game() {
     this.validTiles = [];
     this.validTileSet = new Set();
     this.totalScore = 0;
+    this.bestScore = 0;
+    this.bestWord = "";
     this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.gameOver = false;
@@ -188,8 +190,11 @@ Game.prototype.draw = function draw(ctx) {
     });
     ctx.font = "16px Lato";
     ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.fillText("Score: " + this.totalScore, 28, 12);
+    ctx.textAlign = "left";
+    let bestWordText;
+    this.bestScore === 0 ? (bestWordText = "") : 
+        (bestWordText = "  Best Word: " + this.bestWord.charAt(0).toUpperCase() + this.bestWord.slice(1) + " (" + this.bestScore + ")");
+    ctx.fillText("Score: " + this.totalScore + bestWordText, 5, 12);
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {
@@ -405,12 +410,18 @@ Game.prototype.calculateScore = function calculateScore(word) {
         "U": 1, "V": 4, "W": 4, "X": 8, "Y": 4, "Z": 10
     }; 
     // debugger;
+    let currentWordScore = 0;
     for (let i = 0; i < word.length; i++) {
-        this.totalScore += letter_scores[word[i].toUpperCase()];
+        currentWordScore += letter_scores[word[i].toUpperCase()]; 
     }
     if (word.length >= 10) {
-        this.totalScore += 25; // 25 bonus points for 10 letter or longer words
+        currentWordScore += 25; // 25 bonus points for 10 letter or longer words
     }
+    if (currentWordScore >= this.bestScore) {
+        this.bestScore = currentWordScore;
+        this.bestWord = word;
+    }
+    this.totalScore += currentWordScore;
     // console.log(this.totalScore);
 }
 

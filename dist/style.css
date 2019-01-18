@@ -1,9 +1,9 @@
 body {
-    /* background-image: url("/src/assets/abstract-2743622_1920.jpg"); */
     width: 90%;
     height: 90%;
     display: flex;
     justify-content: space-around;
+    background-image: url("/src/assets/wooden-floor-1853403_1920.jpg");
 }
 
 h1 {
@@ -38,6 +38,10 @@ h1 span {
 
 .canvas-container {
     padding-top: 10px;
+}
+
+#game-canvas {
+    background-image: url("/src/assets/abstract-2743622_1920.jpg");
 }
 
 @font-face { font-family: ScrambleMixed; src: url('ScrambleMixed.ttf'); } 

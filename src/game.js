@@ -8,6 +8,7 @@ function Game() {
     this.validWords = [];
     this.validTiles = [];
     this.validTileSet = new Set();
+    this.totalScore = 0;
     this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
     this.gameOver = false;
@@ -185,6 +186,10 @@ Game.prototype.draw = function draw(ctx) {
     this.allObjects().forEach(function (object) {
         object.draw(ctx);
     });
+    ctx.font = "16px Lato";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.fillText("Score: " + this.totalScore, 28, 12);
 };
 
 Game.prototype.moveObjects = function moveObjects(delta) {
@@ -391,6 +396,29 @@ Game.prototype.destroyTiles = function destroyTiles() {
         this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
     });
     this.checkWords();
+}
+
+Game.prototype.calculateScore = function calculateScore(word) {
+    letter_scores = {
+        "A": 1, "B": 3, "C": 3, "D": 2, "E": 1, "F": 4, "G": 2, "H": 4, "I": 1, "J": 8,
+        "K": 5, "L": 1, "M": 3, "N": 1, "O": 1, "P": 3, "Q": 10, "R": 1, "S": 1, "T": 1,
+        "U": 1, "V": 4, "W": 4, "X": 8, "Y": 4, "Z": 10
+    }; 
+    // debugger;
+    for (let i = 0; i < word.length; i++) {
+        this.totalScore += letter_scores[word[i].toUpperCase()];
+    }
+    if (word.length >= 10) {
+        this.totalScore += 25; // 25 bonus points for 10 letter or longer words
+    }
+    // console.log(this.totalScore);
+}
+
+Game.prototype.calculateTotalScore = function calculateTotalScore() {
+    // debugger;
+    this.validWords.forEach( (word) => {
+        this.calculateScore(word);
+    });
 }
 
 Game.prototype.fillMissingSpaces = function fillMissingSpaces() {

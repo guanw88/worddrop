@@ -15,6 +15,7 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
     checkRightCollision = this.game.checkRightCollision.bind(this.game);
     checkVerticalCollisions = this.game.checkVerticalCollisions.bind(this.game);
     destroyTiles = this.game.destroyTiles.bind(this.game);
+    calculateTotalScore = this.game.calculateTotalScore.bind(this.game);
 
     function handleKeypress(event) {
         if (event.keyCode == 97 && checkLeftCollision() === false) {
@@ -35,6 +36,7 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
             requestAnimationFrame(render);
         } else if (event.keyCode == 32) {
             event.preventDefault();
+            calculateTotalScore();
             destroyTiles(); // spacebar
             requestAnimationFrame(render);
         } else {

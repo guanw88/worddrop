@@ -18,24 +18,22 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
     calculateTotalScore = this.game.calculateTotalScore.bind(this.game);
 
     function handleKeypress(event) {
+        if ([97, 100, 119, 115, 32].includes(event.keyCode)) {
+          event.preventDefault();
+        }
         if (event.keyCode == 97 && checkLeftCollision() === false) {
-            event.preventDefault();
             tile.shift(-1); // a
             requestAnimationFrame(render);
         } else if (event.keyCode == 100 && checkRightCollision() === false) {
-            event.preventDefault();
             tile.shift(1); // d
             requestAnimationFrame(render);
         } else if (event.keyCode == 119) {
-            event.preventDefault();
             tile.toggleLetter(); // w
             requestAnimationFrame(render);
         } else if (event.keyCode == 115 && checkVerticalCollisions() === false) {
-            event.preventDefault();
             tile.drop(1); // s
             requestAnimationFrame(render);
         } else if (event.keyCode == 32) {
-            event.preventDefault();
             calculateTotalScore();
             destroyTiles(); // spacebar
             requestAnimationFrame(render);
@@ -45,20 +43,19 @@ GameView.prototype.bindKeyHandlers = function bindKeyHandlers(tile) {
     }
 
     function handleKeydown(event) {
+        if ([37, 39, 38, 40].includes(event.keyCode)) {
+          event.preventDefault();
+        }
         if (event.keyCode == 37 && checkLeftCollision() === false) {
-            event.preventDefault();
             tile.shift(-1); // left arrow
             requestAnimationFrame(render);
         } else if (event.keyCode == 39 && checkRightCollision() === false) {
-            event.preventDefault();
             tile.shift(1); // right arrow
             requestAnimationFrame(render);
         } else if (event.keyCode == 38) {
-            event.preventDefault();
             tile.toggleLetter();
             requestAnimationFrame(render);
         } else if (event.keyCode == 40 && checkVerticalCollisions() === false) {
-            event.preventDefault();
             tile.drop(1); // s
             requestAnimationFrame(render);
         } else {

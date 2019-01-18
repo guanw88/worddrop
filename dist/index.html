@@ -9,11 +9,43 @@
 </head>
 
 <body>
-    <div>WordDrop - An HTML5 Canvas Game</div>
     <div>
+        <h1>worddrop<br/><span>An HTML5 Canvas Game</span></h1>
+        <div class="instructions">
+            Instructions<br/>
+            <span>Make 4+ letter words from the dropped tiles! Earn points for each word cleared and try to get 10+ letter words for bonus points!</span><br/>
+            <br /><br />
+            Controls<br/><br/>
+
+            <table>
+                <tr>
+                    <th>LEFT / A</th>
+                    <th><span>Move Left</span></th>
+                </tr>
+                <tr>
+                    <th>RIGHT / D</th>
+                    <th><span>Move Right</span></th>
+                </tr>
+                <tr>
+                    <th>UP / W</th>
+                    <th><span>Toggle Letter</span></th>
+                </tr>
+                <tr>
+                    <th>DOWN / S</th>
+                    <th><span>Drop Tile</span></th>
+                </tr>
+                <tr>
+                    <th>SPACE</th>
+                    <th><span>Clear Words</span></th>
+                </tr>
+            </table>
+            <br/><br/>
+            Credits <br />
+            <span>Game Design and Coding by George Wang | <a href="https://github.com/guanw88/worddrop" target="_blank">Github</a> <br /></span>
+        </div>
+    </div>
+    <div class="canvas-container">
         <canvas id="game-canvas" width="600px" height="600px" style="border: 1px solid black"></canvas>
-        <div>Instructions: Make 4+ letter words from the dropped tiles, then press SPACE to clear them!<br/>Press UP ARROW to toggle letters, LEFT/RIGHT to
-        move, and DOWN to drop.</div>
     </div>
 </body>
 

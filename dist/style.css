@@ -2,11 +2,46 @@ body {
     /* background-image: url("/src/assets/abstract-2743622_1920.jpg"); */
     width: 90%;
     height: 90%;
+    display: flex;
+    justify-content: space-around;
+}
+
+h1 {
+    font-family: 'Scramble';
+    font-size: 32px;
+    text-align: center;
+}
+
+h1 span {
+    font-family: "ScrambleMixed";
+    text-transform: uppercase;
+    font-size: 32px;
+}
+
+.instructions {
+    font-family: 'Scramble';
+    font-size: 20px;
+    padding: 20px;
+    text-align: justify;
+    max-width: 400px;
+}
+
+.instructions span {
+    font-family: "ScrambleMixed";
+    text-transform: uppercase;
+    font-size: 20px;
 }
 
 .game-display {
     display: flex;
 }
+
+.canvas-container {
+    padding-top: 10px;
+}
+
+@font-face { font-family: ScrambleMixed; src: url('ScrambleMixed.ttf'); } 
+@font-face { font-family: Scramble; src: url('Scramble.ttf'); } 
 
     /* background-color: #159957;
     background-image: linear-gradient(120deg, #155799, #159957) */

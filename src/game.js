@@ -462,6 +462,7 @@ Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
       this.tileGrid[tile.x / 60][tile.y / 60] = tile;
       this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
     });
+    this.checkWords();
 }
 
 Game.prototype.drawGameOver = function drawGameOver(ctx) {

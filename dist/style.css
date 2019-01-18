@@ -41,7 +41,8 @@ h1 span {
 }
 
 #game-canvas {
-    background-image: url("abstract-2743622_1920.jpg");
+    background-color: #f5f5f5;
+    /* background-image: url("abstract-2743622_1920.jpg"); */
 }
 
 @font-face { font-family: ScrambleMixed; src: url('ScrambleMixed.ttf'); } 

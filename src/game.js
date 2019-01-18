@@ -455,6 +455,13 @@ Game.prototype.fillMissingSpaces = function fillMissingSpaces() {
     }
     let lastTile = this.tiles[this.tiles.length - 1];
     lastTile.movable = true;
+    this.tileGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
+    this.letterGrid = [[null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null]];
+    this.tiles.forEach(tile => {
+      // debugger;
+      this.tileGrid[tile.x / 60][tile.y / 60] = tile;
+      this.letterGrid[tile.x / 60][tile.y / 60] = tile.letter.toLowerCase();
+    });
 }
 
 Game.prototype.drawGameOver = function drawGameOver(ctx) {

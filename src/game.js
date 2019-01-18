@@ -108,7 +108,7 @@ Game.prototype.addTile = function addTile() {
     this.add(newTile);
     this.id += 1;
     let oldTiles = this.tiles.slice(0,-1);
-    if (oldTiles.filter((tile) => (tile.y === 0)).length > 0) {
+    if (oldTiles.filter((tile) => (tile.y < 0)).length > 0) {
         this.gameOver = true;
     }
     return newTile;

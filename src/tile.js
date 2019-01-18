@@ -25,6 +25,12 @@ class Tile {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(this.letter, this.x + 30, this.y+32);
+        // Old version without using Scramble font
+        // ctx.font = "30px Lato";
+        // ctx.fillStyle = "black";
+        // ctx.textAlign = "center";
+        // ctx.textBaseline = "middle";
+        // ctx.fillText(this.letter, this.x + 30, this.y+32);
         // ctx.font = "16px Lato";
         // ctx.fillStyle = "black";
         // ctx.textAlign = "center";

@@ -394,6 +394,8 @@ Game.prototype.highlightTiles = function highlightTiles() {
     this.tiles.forEach( (tile) => {
       if (highlighted.includes(tile.id)) {
           tile.color = "#b7c9b9";
+      } else {
+          tile.color = "#D4BAAC";
       }
     });
 };

@@ -2,14 +2,14 @@
 <html lang="en" dir="ltr">
 
 <head>
-    <script src="./dist/main.js" charset="utf-8"></script>
-    <link href="./dist/style.css" rel="stylesheet" type="text/css"></a>
+    <script src="./main.js" charset="utf-8"></script>
+    <link href="./style.css" rel="stylesheet" type="text/css"></a>
     <meta charset="utf-8">
     <title>WordDrop - An HTML5 Canvas Game</title>
 </head>
 
 <body>
-    <div>
+    <main>
         <h1>worddrop<br /><span>An HTML5 Canvas Game</span></h1>
         <div class="instructions">
             Instructions<br />
@@ -20,23 +20,28 @@
 
             <table>
                 <tr>
-                    <th>LEFT / A</th>
+                    <th>LEFT</th>
+                    <th>A</th>
                     <th><span>Move Left</span></th>
                 </tr>
                 <tr>
-                    <th>RIGHT / D</th>
+                    <th>RIGHT</th>
+                    <th>D</th>
                     <th><span>Move Right</span></th>
                 </tr>
                 <tr>
-                    <th>UP / W</th>
+                    <th>UP</th>
+                    <th>W</th>
                     <th><span>Toggle Letter</span></th>
                 </tr>
                 <tr>
-                    <th>DOWN / S</th>
+                    <th>DOWN</th>
+                    <th>S</th>
                     <th><span>Drop Tile</span></th>
                 </tr>
                 <tr>
                     <th>SPACE</th>
+                    <th></th>
                     <th><span>Clear Words</span></th>
                 </tr>
             </table>
@@ -45,7 +50,7 @@
             <span>Game Design and Coding by George Wang | <a href="https://github.com/guanw88/worddrop" target="_blank">Github</a>
                 <br /></span>
         </div>
-    </div>
+    </main>
     <div class="canvas-container">
         <canvas id="game-canvas" width="600px" height="600px" style="border: 1px solid black"></canvas>
     </div>

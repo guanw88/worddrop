@@ -4,6 +4,7 @@ body {
     display: flex;
     justify-content: space-around;
     background-image: url("wooden-floor-1853403_1920.jpg");
+    margin-left: 6px;
 }
 
 h1 {
@@ -43,6 +44,10 @@ h1 span {
 #game-canvas {
     background-color: #f5f5f5;
     /* background-image: url("abstract-2743622_1920.jpg"); */
+}
+
+table th {
+    padding-right: 15px;
 }
 
 @font-face { font-family: ScrambleMixed; src: url('ScrambleMixed.ttf'); } 

@@ -9,5 +9,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, 150, 75);
     const game = new Game(ctx);
-    new GameView(game, ctx).start();
+    document.fonts.load('60pt "Scramble"').then(
+        () => {
+            new GameView(game, ctx).start();
+        }
+    );
 });

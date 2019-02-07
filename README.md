@@ -2,6 +2,8 @@
 
 A twist on the classic game Tetris, where the player needs to create words from falling Scrabble tiles. Built in HTML5 and Canvas.
 
+[Click here to play WordDrop!](https://guanw88.github.io/worddrop)
+
 ![WordDrop Game](http://www.george-wang.com/images/worddrop.gif "WordDrop in Action")
 
 

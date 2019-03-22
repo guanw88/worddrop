@@ -1,4 +1,4 @@
-# worddrop
+# worddrop 
 
 Worddrop is a twist on the classic game Tetris, where the player needs to create words from falling Scrabble tiles. Built in HTML5 and Canvas.
 
